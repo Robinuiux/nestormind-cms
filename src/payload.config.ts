@@ -20,9 +20,9 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  cors: ['http://localhost:3001', 'http://localhost:8080'],
+  cors: ['http://localhost:3001', 'https://nestormind-cms.vercel.app', 'http://localhost:8080'],
 
-  csrf: ['http://localhost:3001', 'http://localhost:8080'],
+  csrf: ['http://localhost:3001', 'https://nestormind-cms.vercel.app', 'http://localhost:8080'],
   collections: [Users, Media, Posts, Categories],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
