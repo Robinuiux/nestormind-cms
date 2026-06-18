@@ -5,9 +5,8 @@ export const Media: CollectionConfig = {
   slug: 'media',
 
   upload: {
-    staticDir: 'media',
+    disableLocalStorage: true,
   },
-
   access: {
     read: () => true,
     create: () => true,
