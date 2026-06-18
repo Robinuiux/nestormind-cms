@@ -1,6 +1,5 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -25,14 +24,7 @@ export default buildConfig({
 
   csrf: ['http://localhost:3001', 'https://nestormind-cms.vercel.app', 'http://localhost:8080'],
   collections: [Users, Media, Posts, Categories],
-  plugins: [
-    vercelBlobStorage({
-      token: process.env.BLOB_READ_WRITE_TOKEN || '',
-      collections: {
-        media: true,
-      },
-    }),
-  ],
+  plugins: [],
 
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
