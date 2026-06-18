@@ -33,6 +33,7 @@ export default buildConfig({
       },
     }),
   ],
+
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -45,3 +46,5 @@ export default buildConfig({
   }),
   sharp,
 })
+
+console.log('BLOB TOKEN EXISTS:', !!process.env.BLOB_READ_WRITE_TOKEN)
