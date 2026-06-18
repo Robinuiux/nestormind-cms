@@ -1,16 +1,38 @@
 import cloudinary from '@/lib/cloudinary'
+import streamifier from 'streamifier'
 
 export const uploadToCloudinary = async ({ req, data }: any) => {
-  const file = req.file
+  try {
+    const file = req.file
 
-  if (!file) return data
+    if (!file || !file.data) {
+      console.log('No file found')
+      return data
+    }
 
-  const result = await cloudinary.uploader.upload(file.tempFilePath || file.path, {
-    folder: 'nestormind-blog',
-  })
+    const result: any = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        {
+          folder: 'nestormind-blog',
+        },
+        (error, result) => {
+          if (error) reject(error)
+          else resolve(result)
+        },
+      )
 
-  data.cloudinaryUrl = result.secure_url
-  data.publicId = result.public_id
+      streamifier.createReadStream(file.data).pipe(stream)
+    })
 
-  return data
+    data.cloudinaryUrl = result.secure_url
+    data.publicId = result.public_id
+
+    console.log('Cloudinary Success:', result.secure_url)
+
+    return data
+  } catch (error) {
+    console.error('========== CLOUDINARY ERROR ==========')
+    console.error(error)
+    throw error
+  }
 }
